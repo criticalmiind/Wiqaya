@@ -59,8 +59,6 @@ buck-out/
 /ios/Pods/
 
 #fonts
-src/Assets/Fonts
-android/app/src/main/assets/fonts
 android/app/build/
 android/app/release/
 src/redux/actions/data.json
