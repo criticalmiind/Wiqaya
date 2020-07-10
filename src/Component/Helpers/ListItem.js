@@ -8,6 +8,12 @@ class ListItem extends React.Component {
         expanded: false
     }
 
+    _padPageNumber(number){
+        let str = "" + number
+        let pad = "000"
+        return pad.substring(0, pad.length - str.length) + str;
+    }
+
     render() {
 
         const {

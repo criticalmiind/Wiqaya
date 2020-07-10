@@ -1,5 +1,6 @@
 import axios from 'axios';
 import constants from '../../constants';
+// import data from './data';
 
 const {
     set_all_categories,
@@ -24,7 +25,8 @@ const {
     force_update,
     set_play_button,
     set_nextButton,
-    set_previousButton
+    set_previousButton,
+    reset_data
 } = constants.red_types;
 
 export const setDiscardPlayback = (payload) => {
@@ -34,12 +36,6 @@ export const setDiscardPlayback = (payload) => {
     }
 }
 
-function _padPageNumber(number){
-    let str = "" + number
-    let pad = "000"
-    return pad.substring(0, pad.length - str.length) + str;
-}
-
 export const getAllRecords = (callbackSuccess, callbackFailure) => {
     return async dispatch => {
         try {
@@ -47,9 +43,8 @@ export const getAllRecords = (callbackSuccess, callbackFailure) => {
                 method: 'GET',
                 url: 'http://waqaya.weqya.com/Test_api/pagination_api'
             });
-            // const result = {
-            //     data: data
-            // };
+            // const result = { data:data }
+
             if(Object.keys(result.data).length > 0){
                 dispatch({
                     type: set_all_records,
@@ -80,10 +75,10 @@ export const getAllRecords = (callbackSuccess, callbackFailure) => {
                     juzzFilter: {
                         type: set_juzz_limit,
                         title: 'مرشح جزو',
-                        min: 1,
-                        max: 30,
-                        currMin: 1,
-                        currMax: 30
+                        min: parseInt(result.data[pagesArray[0]][0].juz_number),
+                        max: result.data[pagesArray[Object.keys(result.data).length - 1]][result.data[pagesArray[Object.keys(result.data).length - 1]].length-1].juz_number,
+                        currMin: parseInt(result.data[pagesArray[0]][0].juz_number),
+                        currMax: result.data[pagesArray[Object.keys(result.data).length - 1]][result.data[pagesArray[Object.keys(result.data).length - 1]].length-1].juz_number
                     },
                     ayatFilter: {
                         type: set_ayat_limit,
@@ -106,6 +101,11 @@ export const getAllRecords = (callbackSuccess, callbackFailure) => {
                     type: set_filters,
                     payload: filters
                 });
+            }else{
+                dispatch({
+                    type: reset_data,
+                    payload: null
+                });
             }
             callbackSuccess();
         } catch (e) {
@@ -126,6 +126,11 @@ export const getCategories = () => {
                 dispatch({
                     type: set_all_categories,
                     payload: result.data
+                });
+            }else{
+                dispatch({
+                    type: reset_data,
+                    payload: null
                 });
             }
         } catch (e) {
@@ -185,6 +190,50 @@ export const fetchRecord = (id) => {
                 dispatch({
                     type: set_current_page,
                     payload: pagesArray[0]
+                });
+                const filters = {
+                    pageFilter: {
+                        type: set_page_limit,
+                        title: 'مرشح الصفحة',
+                        min: parseInt(pagesArray[0]),
+                        max: parseInt(pagesArray[pagesArray.length - 1]),
+                        currMin: parseInt(pagesArray[0]),
+                        currMax: parseInt(pagesArray[pagesArray.length - 1])
+                    },
+
+                    juzzFilter: {
+                        type: set_juzz_limit,
+                        title: 'مرشح جزو',
+                        min: parseInt(result.data[pagesArray[0]][0].juz_number),
+                        max: result.data[pagesArray[Object.keys(result.data).length - 1]][result.data[pagesArray[Object.keys(result.data).length - 1]].length-1].juz_number,
+                        currMin: parseInt(result.data[pagesArray[0]][0].juz_number),
+                        currMax: result.data[pagesArray[Object.keys(result.data).length - 1]][result.data[pagesArray[Object.keys(result.data).length - 1]].length-1].juz_number
+                    },
+                    ayatFilter: {
+                        type: set_ayat_limit,
+                        title: 'آيات مرشح',
+                        min: parseInt(result.data[pagesArray[0]][0].ayat),
+                        max: parseInt(result.data[pagesArray[0]][result.data[pagesArray[0]].length - 1].ayat),
+                        currMin: parseInt(result.data[pagesArray[0]][0].ayat),
+                        currMax: parseInt(result.data[pagesArray[0]][result.data[pagesArray[0]].length - 1].ayat)
+                    },
+                    voiceFilter: {
+                        type: set_repeat_limit,
+                        title: 'کرر الصوت',
+                        min: 1,
+                        max: 10,
+                        currMin: 1, 
+                        currMax: 1
+                    }
+                }
+                dispatch({
+                    type: set_filters,
+                    payload: filters
+                });
+            }else{
+                dispatch({
+                    type: reset_data,
+                    payload: null
                 });
             }
         } catch (e) {

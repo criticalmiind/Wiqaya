@@ -13,6 +13,8 @@ npm install
 ```
 
 ### Step 03:
+
+#### Android Build
  - For Android : ``` react-native run-android --no-jetifier ```
  - For IOS : ``` react-native run-android ```
 or
@@ -30,3 +32,20 @@ or
  $ cd android/
  $ ./gradlew assembleRelease
  ```
+
+#### IOS Build
+
+ 1. Get the .app file:
+    ```
+    react-native run-ios --configuration=release
+    ```
+ 2. .app file path 
+    ```Build/Products/Release/"<Your_Filename>.app".```
+    or
+    ```/Users/<"Your_system_name">/Library/Developer/Xcode/DerivedData/<"App_Name">/Build/Products/Release-iphonesimulator/"<Your_Filename>.app"```
+
+ 3. Convert .app to .ipa :
+  - Create folder Payload.
+  - Paste .app file into Payload folder.
+  - compress the Payload folder.
+  - change the name you want and put extension as .ipa.

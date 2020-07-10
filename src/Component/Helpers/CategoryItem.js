@@ -35,7 +35,8 @@ class CategoryItem extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        ...state.home
+        ...state.home //for simple store
+        // ...state.reducers.home // for persist store
     }
 }
 

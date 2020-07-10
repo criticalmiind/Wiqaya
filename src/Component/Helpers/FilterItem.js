@@ -38,33 +38,84 @@ class FilterItem extends React.Component {
     }
 
     _slider(value, single){
-        if ((parseInt(value[0]) > 0 && parseInt(value[1]) < parseInt(this.props.max))) {
-            if (!single) {
-                this.setState({ min: value[0], max: value[1] })
-                this.props.setLimit(this.props.type, [this._padPageNumber(value[0]), this._padPageNumber(value[1])]);
-                this.props.onPress()
+        if (!single) {
+            if ((parseInt(value[0]) > 0 && parseInt(value[0]) < parseInt(value[1]) && parseInt(value[1]) <= parseInt(this.props.max))) {
+                if(value[0] !== value[1]-1){
+                    switch (this.props.type) {
+                        case "set_page_limit":
+                            this.props.setLimit(this.props.type, [this._padPageNumber(value[0]), this._padPageNumber(value[1])]);
+                            break;
+                        case "set_juzz_limit":
+                            this.props.setLimit(this.props.type, [parseInt(value[0]), parseInt(value[1])]);
+                            break;
+                        case "set_ayat_limit":
+                            this.props.setLimit(this.props.type, [parseInt(value[0]), parseInt(value[1])]);
+                            break;
+                        case "set_repeat_limit":
+                            this.setState({ max: value[0] })
+                            this.props.setLimit(type, [parseInt(this.props.min), parseInt(value[0])]);
+                            break;
+                        default:
+                            break;
+                    }
+                    this.setState({ min: value[0], max: value[1] })
+                    // this.props.onPress()
+                }
             }
-            else {
-                this.setState({ max: value[0] })
-                this.props.setLimit(type, [this._padPageNumber(this.props.min), this._padPageNumber(value[0])]);
-            }
+        }else {
+            this.setState({ max: value[0] })
+            this.props.setLimit(this.props.type, [parseInt(this.props.min), parseInt(value[0])]);
+            // this.props.onPress()
         }
     }
 
     _minInputBox(text){
         if ((parseInt(text) > 0 && parseInt(this.props.currMax) > parseInt(text))) {
             if (text) {
-                this.setState({ min: text });
-                this.props.setLimit(this.props.type, [this._padPageNumber(text), this._padPageNumber(this.props.currMax)]);
+                if(this.props.max > text){
+                    switch (this.props.type) {
+                        case "set_page_limit":
+                            this.props.setLimit(this.props.type, [this._padPageNumber(text), this._padPageNumber(this.props.currMax)]);
+                            break;
+                        case "set_juzz_limit":
+                            this.props.setLimit(this.props.type, [parseInt(text), parseInt(this.props.currMax)]);
+                            break;
+                        case "set_ayat_limit":
+                            this.props.setLimit(this.props.type, [parseInt(text), parseInt(this.props.currMax)]);
+                            break;
+                        case "set_repeat_limit":
+                            this.props.setLimit(this.props.type, [parseInt(text), parseInt(this.props.currMax)]);
+                            break;
+                        default:
+                            break;
+                    }
+                    this.setState({ min: text });
+                }
             }
         }
     }
 
     _maxInputBox(text){
-        if ((parseInt(this.props.min) > 0 && parseInt(this.props.max) > parseInt(this.props.min))) {
+        if ((parseInt(this.props.min) > 0 && parseInt(text) > parseInt(this.props.min)) && parseInt(this.props.max) >= parseInt(text)) {
             if (text) {
+                switch (this.props.type) {
+                    case "set_page_limit":
+                        this.props.setLimit(this.props.type, [this._padPageNumber(this.props.currMin), this._padPageNumber(text)]);
+                        break;
+                    case "set_juzz_limit":
+                        this.props.setLimit(this.props.type, [parseInt(this.props.currMin), parseInt(text)]);
+                        break;
+                    case "set_ayat_limit":
+                        this.props.setLimit(this.props.type, [parseInt(this.props.currMin), parseInt(text)]);
+                        break;
+                    case "set_repeat_limit":
+                        this.props.setLimit(this.props.type, [parseInt(this.props.currMin), parseInt(text)]);
+                        break;
+                
+                    default:
+                        break;
+                }
                 this.setState({ max: text });
-                this.props.setLimit(this.props.type, [this._padPageNumber(this.props.currMin), this._padPageNumber(text)]);
             }
         }
     }
@@ -98,7 +149,6 @@ class FilterItem extends React.Component {
         const {
             expanded
         } = this.state;
-
 
         return (
             <Aux>

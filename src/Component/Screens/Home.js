@@ -21,23 +21,36 @@ class Home extends React.Component {
         error: false,
         currPage: '',
         dropDownIndex:0,
-        viewableItems: null
+        viewableItems: null,
+        selectedPage: {}
     }
 
     componentDidMount() {
         SplashScreen.hide();
         const { 
             getCategories,
-            getAllRecords
+            getAllRecords,
+            allRecords,
+            allCategories
         } = this.props;
         getCategories();
+        if(allCategories === null || allCategories.length < 1){
+            getCategories();
+        }
+
         const callbackSuccess = () => {
             this.setState({ loading: false });
         }
-        const callbackFailure = () => { 
+        const callbackFailure = () => {
             this.setState({ loading: false, error: true });
         }
-        getAllRecords(callbackSuccess, callbackFailure);
+
+        // if(allRecords === null || Object.keys(allRecords).length < 1){
+            getAllRecords(callbackSuccess, callbackFailure);
+        // }else{
+        //     this.setState({ loading: false });
+        // }
+
         this.props.setForceUpdate(() => this.forceUpdate());
     }
 
@@ -109,16 +122,26 @@ class Home extends React.Component {
             playbackIndex
         } = this.props;
 
-        if (this.list && playbackIndex.i) if (this.state.viewableItems) {
-            const found = this.state.viewableItems.find(el => el.index === playbackIndex.i);
-            if (!found){
-                this.list.scrollToIndex({ animated: true, index: playbackIndex.i-1 });
+        if (this.list && playbackIndex.i){
+            if (this.state.viewableItems) {
+                const found = this.state.viewableItems.find(el => el.index === playbackIndex.i);
+                if (!found){
+                    this.list.scrollToIndex({ animated: true, index: playbackIndex.i-1 });
+                }
+                if(playbackIndex.i === this.state.selectedPage.data.length){
+                    this.list.scrollToOffset({ animated: false, offset: 0 })
+                }
             }
         }
 
-        if(parseInt(this.props.pageFilter.currMin) <= parseInt(currentPage.page) && parseInt(this.props.pageFilter.currMax) >= parseInt(currentPage.page)){
-            if (currentPage) {
+        const scrollToTop = () =>{
+            this.list.scrollToOffset({ animated: false, offset: 0 }) 
+        }
+
+        if (currentPage) {
+            if(parseInt(this.props.pageFilter.currMin) <= parseInt(currentPage.page) && parseInt(this.props.pageFilter.currMax) >= parseInt(currentPage.page)){
                 this.state.currPage = currentPage.page;
+                this.state.selectedPage = currentPage;
                 if (currentPage.data) {
                     currentPage.data.sort(function(a, b){return a.id - b.id});
                     return (
@@ -143,6 +166,7 @@ class Home extends React.Component {
                             <View style={{ flex: 1 }}>
                                 <FlatList
                                     data={currentPage.data}
+                                    scrollEnabled={true}
                                     ref={ref => this.list = ref}
                                     onViewableItemsChanged={this.onViewableItemsChanged}
                                     onScrollToIndexFailed={() => this.list.scrollToOffset({ animated: false, offset: 0 })}
@@ -151,6 +175,7 @@ class Home extends React.Component {
                                         itemVisiblePercentThreshold: 99
                                     }}
                                     renderItem={({ item, index }) => {
+                                        // console.log("playbackIndex : ", playbackIndex)
                                         return <DataItem
                                             last={(index === currentPage.data.length - 1)}
                                             hilighted={index === playbackIndex.i}
@@ -162,6 +187,7 @@ class Home extends React.Component {
                                     activeOpacity={0.6}
                                     disabled={parseInt(currentPage.page) === parseInt(pagesArray[parseInt(pagesArray.length) - 1]) || parseInt(currentPage.page) >= parseInt(this.props.pageFilter.currMax)}
                                     onPress={setCurrentPage.bind(this, `${this._padPageNumber(parseInt(currentPage.page) + 1)}`)}
+                                    onPressOut={scrollToTop}
                                     style={pageNavTouch}>
                                     <Text>{'التالي'}</Text>
                                 </TouchableOpacity>
@@ -203,6 +229,7 @@ class Home extends React.Component {
                                     activeOpacity={0.6}
                                     disabled={parseInt(currentPage.page) === parseInt(pagesArray[0]) || parseInt(currentPage.page) <= parseInt(this.props.pageFilter.currMin)}
                                     onPress={setCurrentPage.bind(this, `${this._padPageNumber(parseInt(currentPage.page) - 1)}`) }
+                                    onPressOut={scrollToTop}
                                     style={pageNavTouch}>
                                     <Text>{'السابق'}</Text>
                                 </TouchableOpacity>
@@ -214,20 +241,19 @@ class Home extends React.Component {
                         <View style={selectorContainer}>
                             <Text style={{ color: '#fff', fontSize: 20 }}>
                                 لم يتم العثور على نتائج
-                        </Text>
+                            </Text>
                         </View>
                     );
                 }
             }
-            else {
-                return (
-                    <View style={selectorContainer}>
-                        <Text style={{ color: '#fff', fontSize: 20 }}>
-                            لم يتم العثور على نتائج
+        } else {
+            return (
+                <View style={selectorContainer}>
+                    <Text style={{ color: '#fff', fontSize: 20 }}>
+                        لم يتم العثور على نتائج
                     </Text>
-                    </View>
-                );
-            }
+                </View>
+            );
         }
     }
 
@@ -457,12 +483,12 @@ const Styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
     }
-
 });
 
 const mapStateToProps = state => {
     return {
-        ...state.home
+        ...state.home //for simple store
+        // ...state.reducers.home // for persist store
     }
 }
 

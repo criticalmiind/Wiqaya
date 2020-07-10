@@ -28,6 +28,7 @@ export default {
         set_play_button: 'set_play_button',
         set_nextButton: 'set_nextButton',
         set_previousButton: 'set_previousButton',
+        reset_data: 'reset_data',
     },
 
     closeDrawer: null

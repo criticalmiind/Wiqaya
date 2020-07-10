@@ -38,7 +38,6 @@ class Filters extends React.Component {
         const {
             expanded
         } = this.state;
-
         return (
             <Aux>
                 <View style={container}>
