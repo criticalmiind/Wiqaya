@@ -8,7 +8,7 @@ export default {
         set_record: 'set_record',
         set_all_records: 'set_all_records',
         set_page_limit: 'set_page_limit',
-        set_juzz_limit: 'set_juzz_limit',
+        set_juzz_limit: 'set_juzz_limit', 
         set_ayat_limit: 'set_ayat_limit',
         set_repeat_limit: 'set_repeat_limit',
         set_playing: 'set_playing',

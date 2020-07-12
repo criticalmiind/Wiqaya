@@ -393,7 +393,6 @@ const filterData = (state) => {
 }
 
 const startPlayback = (state, id) => {
-    
     let audio;
     if (id) {
         state.timesPlayed.i = 0;
@@ -431,11 +430,6 @@ const startPlayback = (state, id) => {
                                     //play next
                                     if (currentIndex === state.playbackIndex.i) {
 
-                                        // if(state.playbackIndex.i === undefined){
-                                        //     state.playbackIndex = { i:0 }
-                                        //     currentIndex = 0
-                                        // }
-
                                         if (state.playbackIndex.i+1 < state.currentPage.data.length) {
 
                                             state.playbackIndex.i++;
@@ -450,24 +444,25 @@ const startPlayback = (state, id) => {
                                             }
                                         } else{
                                             // next screen play
+                                            state.playing.playing.release();
 
-                                            let nextPage = parseInt(state.currentPage.page) + 1;
-                                            
-                                            if(nextPage <  Object.keys(state.allRecords).length){
-                                                let nextPageData = {}
-                                                Object.keys(state.allRecords).map(key=>{
-                                                    if(_padPageNumber(nextPage) === key){
-                                                        nextPageData = state.allRecords[key]
-                                                    }
-                                                })
-                                                state.currentPage.data = nextPageData;
-                                                state.currentPage.page = _padPageNumber(nextPage);
-                                                let newAudio = JSON.parse(state.currentPage.data[0].play_list_audio);
-                                                state.playing.playing.release();
-                                                // playAudio(constants.audioUrl + newAudio[0]);
-                                            }else{
-                                                state.playing.playing.release();
-                                            }
+                                            // let nextPage = parseInt(state.currentPage.page) + 1;
+                                            // if(nextPage <  Object.keys(state.allRecords).length){
+                                            //     let nextPageData = {}
+                                            //     Object.keys(state.allRecords).map(key=>{
+                                            //         if(_padPageNumber(nextPage) === key){
+                                            //             nextPageData = state.allRecords[key]
+                                            //         }
+                                            //     })
+                                            //     state.currentPage.data = nextPageData;
+                                            //     state.currentPage.page = _padPageNumber(nextPage);
+                                            //     state.playbackIndex = { i:0 }
+                                            //     let newAudio = JSON.parse(state.currentPage.data[0].play_list_audio);
+                                            //     // startPlayback(state, state.currentPage.data[0].id)
+                                            //     // playAudio(constants.audioUrl + newAudio[0]);
+                                            // }else{
+                                            //     state.playing.playing.release();
+                                            // }
                                         }
                                     }
                                 } else {
