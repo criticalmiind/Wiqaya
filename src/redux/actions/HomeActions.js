@@ -43,6 +43,7 @@ export const getAllRecords = (callbackSuccess, callbackFailure) => {
                 method: 'GET',
                 url: 'http://waqaya.weqya.com/Test_api/pagination_api'
             });
+            console.log(result)
             // const result = { data:data }
 
             if(Object.keys(result.data).length > 0){
