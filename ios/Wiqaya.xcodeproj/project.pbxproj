@@ -17,6 +17,7 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* WiqayaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* WiqayaTests.m */; };
 		383965F634AD69B2D8589021 /* libPods-Wiqaya.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3334910736337206369A0FBC /* libPods-Wiqaya.a */; };
+		CEDD1F48253F5D8B00C341CC /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEDD1F47253F5D8A00C341CC /* AppCenter-Config.plist */; };
 		D0E625BFA076B175E63677FF /* libPods-Wiqaya-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0153E0EEB63A5663385EBAD /* libPods-Wiqaya-tvOSTests.a */; };
 		D791103224556153000A535D /* QCF2081.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7910DD52455612F000A535D /* QCF2081.ttf */; };
 		D791103324556153000A535D /* QCF2291.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7910DD62455612F000A535D /* QCF2291.ttf */; };
@@ -668,6 +669,7 @@
 		9D9F8559417C6C0D628B95C9 /* Pods-WiqayaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WiqayaTests.debug.xcconfig"; path = "Target Support Files/Pods-WiqayaTests/Pods-WiqayaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A4B191A3F599E0678C9E6E84 /* Pods-Wiqaya-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wiqaya-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Wiqaya-tvOS/Pods-Wiqaya-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		B5D2CAB48FB2C4E963F18C8A /* Pods-Wiqaya-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wiqaya-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Wiqaya-tvOS/Pods-Wiqaya-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		CEDD1F47253F5D8A00C341CC /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "Wiqaya/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		D0153E0EEB63A5663385EBAD /* libPods-Wiqaya-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Wiqaya-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D65F2B6589A07B68049BFFBC /* Pods-Wiqaya.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wiqaya.release.xcconfig"; path = "Target Support Files/Pods-Wiqaya/Pods-Wiqaya.release.xcconfig"; sourceTree = "<group>"; };
 		D7910DD52455612F000A535D /* QCF2081.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = QCF2081.ttf; path = ../src/Assets/Fonts/QCF2081.ttf; sourceTree = "<group>"; };
@@ -1335,6 +1337,7 @@
 		13B07FAE1A68108700A75B9A /* Wiqaya */ = {
 			isa = PBXGroup;
 			children = (
+				CEDD1F47253F5D8A00C341CC /* AppCenter-Config.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -2576,6 +2579,7 @@
 				D79110E624556153000A535D /* QCF2509.ttf in Resources */,
 				D79111D824556153000A535D /* QCF2398.ttf in Resources */,
 				D791119924556153000A535D /* QCF2408.ttf in Resources */,
+				CEDD1F48253F5D8B00C341CC /* AppCenter-Config.plist in Resources */,
 				D791119624556153000A535D /* QCF2313.ttf in Resources */,
 				D791119E24556153000A535D /* QCF2438.ttf in Resources */,
 				D79111C024556153000A535D /* QCF2255.ttf in Resources */,

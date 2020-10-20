@@ -7,11 +7,15 @@
 
 #import "AppDelegate.h"
 
+#import <AppCenterReactNative.h>
+#import <AppCenterReactNativeAnalytics.h>
+#import <AppCenterReactNativeCrashes.h>
+
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "SplashScreen.h"
-
+#import <CodePush/CodePush.h>
 
 @implementation AppDelegate
 
@@ -30,6 +34,10 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   [SplashScreen show];
+
+  [AppCenterReactNative register];
+  [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];
+  [AppCenterReactNativeCrashes registerWithAutomaticProcessing];
   
   return YES;
 }
@@ -40,8 +48,9 @@
   // return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 #else
-    // return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
- return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  // return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  // return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  return [CodePush bundleURL];
 #endif
 }
 

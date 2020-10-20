@@ -143,6 +143,7 @@ class Home extends React.Component {
                 this.state.currPage = currentPage.page;
                 this.state.selectedPage = currentPage;
                 if (currentPage.data) {
+                    console.log("currentPage: ",currentPage)
                     currentPage.data.sort(function(a, b){return a.id - b.id});
                     return (
                         <Aux>
