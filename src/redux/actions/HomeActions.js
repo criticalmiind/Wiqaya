@@ -43,10 +43,10 @@ export const getAllRecords = (callbackSuccess, callbackFailure) => {
                 method: 'GET',
                 url: 'http://waqaya.weqya.com/Test_api/pagination_api'
             });
-            console.log(result)
+            // console.log(typeof(result.data), result)
             // const result = { data:data }
 
-            if(Object.keys(result.data).length > 0){
+            if(typeof(result.data) === 'object' && Object.keys(result.data).length > 0){
                 dispatch({
                     type: set_all_records,
                     payload: result.data
